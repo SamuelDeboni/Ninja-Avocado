@@ -6,24 +6,25 @@ func generate_level():
 				 [0,0,0,0],
 				 [0,0,0,0]]
 	
-	var map_seed = 2624895
-	seed(map_seed)
+	#var map_seed = 2624895
+	#seed(map_seed)
 	
 	var gx = 0
 	var gy = 0
+	gx = int(rand_range(0,4))
 	level[gx][gy] = 1
 	var dir = int(rand_range(0,2))
 	
-	for i in range(0,32):
-		
-		seed(randi())
+	
+	
+	for i in range(0,16):
 		
 		var can_d = gy+1 <= 3
 		var can_l = gx-1 >= 0
 		var can_r = gx+1 <= 3
 		var cant_sides = (dir == 0 and not can_r) or (dir == 1 and not can_l)
 		
-		if can_d and (randf() > 0.9 or cant_sides):
+		if can_d and (randf() > 0.75 or cant_sides):
 			gy += 1	
 			var r = int(rand_range(0,2))
 			dir = r
@@ -46,5 +47,7 @@ func generate_level():
 
 
 func _ready():
-	generate_level()
+	for i in range(0,10):
+		generate_level()
+		seed(randi())
 
