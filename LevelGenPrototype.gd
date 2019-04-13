@@ -47,7 +47,7 @@ func generate_level():
 
 
 func _ready():
-	for i in range(0,10):
-		generate_level()
-		seed(randi())
-
+	#for i in range(0,10):
+		#generate_level()
+		#seed(randi())
+	pass
