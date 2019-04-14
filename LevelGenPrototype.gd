@@ -82,7 +82,10 @@ func instantiate_level(layout, level_number):
 				var instance = load("res://Scenes/LevelPiece/" + seg).instance()
 				instance.position = Vector2(x, y) * SEGMENT_SIZE
 				#print(seg, instance.position)
-				get_tree().get_root().add_child(instance)
+				
+				# I'm using `call_deferred` here because `add_child` fails if
+				# it is called by `_ready`
+				get_tree().get_root().call_deferred("add_child", instance)
 
 func _ready():
 	generate_level()
