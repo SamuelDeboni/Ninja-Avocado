@@ -44,6 +44,24 @@ func generate_level():
 	print(level[2])
 	print(level[3])
 
+func instantiate_level(layout, level_number):
+	# `layout` is the level layout returned by `generate_level`.
+	# `level_number` is the index of the level we're in. This is important to
+	# know the difficulty of the level
+	
+	var segment_pool = []
+	var levels_per_dlevel = 5 # `dlevel` stands for "difficulty level"
+	var num_dlevels = 3
+	
+	for dlevel in range(num_dlevels):
+		if level_number >= levels_per_dlevel * dlevel:
+			# This presumes that every diffculty level has the same number of
+			# segments. Ideally, we would look in the segment directory to
+			# find which segments exist, but for now this is good enough.
+			for i in range(8):
+				segment_pool.push_back("Seg-%02d-%02d.tscn" % [dlevel, i])
+	
+	print(segment_pool)
 
 func _ready():
 	for i in range(0,10):
