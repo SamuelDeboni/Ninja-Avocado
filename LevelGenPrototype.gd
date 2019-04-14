@@ -1,7 +1,7 @@
 extends Node2D
 
-const MAX_DLEVEL = 4 # Maximum difficulty level
-const SEGMENT_SIZE = 8
+const MAX_DLEVEL = 1 # Maximum difficulty level
+const SEGMENT_SIZE = 384
 
 func generate_level():
 	var level = [[0,0,0,0],
@@ -9,12 +9,11 @@ func generate_level():
 				 [0,0,0,0],
 				 [0,0,0,0]]
 	
-	#var map_seed = 2624895
-	#seed(map_seed)
+	seed(randi())
 	
 	var gx = 0
 	var gy = 0
-	gx = int(rand_range(0,4))
+	gy = int(rand_range(0,4))
 	level[gx][gy] = 1
 	var dir = int(rand_range(0,2))
 	
@@ -60,7 +59,7 @@ func instantiate_level(layout, level_number):
 		# This presumes that every diffculty level has the same number of
 		# segments. Ideally, we would look in the segment directory to find 
 		# which segments exist, but for now this is good enough.
-		for i in range(1):
+		for i in range(2):
 				segment_pool.push_back("Seg-%02d-%02d.tscn" % [d, i])
 	
 	#print(segment_pool)
@@ -68,13 +67,15 @@ func instantiate_level(layout, level_number):
 	for y in range(4):
 		for x in range(4):
 			var seg = ""
-			match layout[y][x]:
-				1:
+			match layout[abs(x-3)][y]:
+				3:
 					seg = "Entrance.tscn"
 				2:
 					seg = segment_pool[randi() % segment_pool.size()]
-				3:
+				1:
 					seg = "Exit.tscn"
+				0:
+					seg = "Fill.tscn"
 				_:
 					pass
 			
@@ -86,6 +87,8 @@ func instantiate_level(layout, level_number):
 				# I'm using `call_deferred` here because `add_child` fails if
 				# it is called by `_ready`
 				get_tree().get_root().call_deferred("add_child", instance)
+				if seg == "Entrance.tscn":
+					$NinjaAvocado.position = Vector2(x, y) * SEGMENT_SIZE + Vector2(190,128) 
 
 func _ready():
 	generate_level()

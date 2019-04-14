@@ -48,7 +48,6 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_up"):
 		jump()
 	
-	print(is_on_wall())
 	vel.x = clamp(vel.x,-300,300)
 	move_and_slide_with_snap(vel,Vector2(0,1),Vector2(0,-1),snap,4,0.75,false)
 	snap = true
