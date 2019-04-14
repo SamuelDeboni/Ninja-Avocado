@@ -1,6 +1,7 @@
 extends Node2D
 
 const MAX_DLEVEL = 4 # Maximum difficulty level
+const SEGMENT_SIZE = 8
 
 func generate_level():
 	var level = [[0,0,0,0],
@@ -40,7 +41,7 @@ func generate_level():
 			break
 		
 		level[gx][gy] = 2
-		
+	instantiate_level(level, 0)
 	print(level[0])
 	print(level[1])
 	print(level[2])
@@ -66,21 +67,22 @@ func instantiate_level(layout, level_number):
 	
 	for y in range(4):
 		for x in range(4):
+			var seg = ""
 			match layout[y][x]:
 				1:
-					pass #TODO: instantiate entrance
+					seg = "Entrance.tscn"
 				2:
-					var seg = segment_pool[randi() % segment_pool.size()]
-					var instance = load("res://Scenes/LevelPiece/" + seg).instance()
-					get_tree().get_root().add_child(instance)
-					#TODO: change instance position
+					seg = segment_pool[randi() % segment_pool.size()]
 				3:
-					pass #TODO: instantiate exit
+					seg = "Exit.tscn"
 				_:
 					pass
+			
+			if seg != "":
+				var instance = load("res://Scenes/LevelPiece/" + seg).instance()
+				instance.position = Vector2(x, y) * SEGMENT_SIZE
+				#print(seg, instance.position)
+				get_tree().get_root().add_child(instance)
 
 func _ready():
-	for i in range(0,10):
-		generate_level()
-		seed(randi())
-	pass
+	generate_level()
