@@ -14,11 +14,13 @@ func _ready():
 
 func _process(delta):
 	
-	if not ((Input.is_action_pressed("ui_left") or
-	   Input.is_action_pressed("ui_right"))
-	   and is_on_wall() and vel.y > 100):
-		do_gravity(delta)
 	
+	do_gravity(delta)
+	
+	if ((Input.is_action_pressed("ui_left") or
+	   Input.is_action_pressed("ui_right"))
+	   and is_on_wall()):
+		vel.y = clamp(vel.y,-1000,100)
 		
 	if is_on_ceiling():
 		vel.y = 1
@@ -40,12 +42,13 @@ func _process(delta):
 		$AnimatedSprite.animation = "Idle"
 	
 	if is_on_wall() and vel.x > 0:
-		vel.x = 1
+		vel.x = 5
 	elif is_on_wall():
-		vel.x = -1
+		vel.x = -5
 	if Input.is_action_just_pressed("ui_up"):
 		jump()
 	
+	print(is_on_wall())
 	vel.x = clamp(vel.x,-300,300)
 	move_and_slide_with_snap(vel,Vector2(0,1),Vector2(0,-1),snap,4,0.75,false)
 	snap = true
