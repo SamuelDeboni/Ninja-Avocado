@@ -14,8 +14,10 @@ func _ready():
 
 func _process(delta):
 	
-	do_gravity(delta)
-	
+	if not ((Input.is_action_pressed("ui_left") or
+	   Input.is_action_pressed("ui_right"))
+	   and is_on_wall() and vel.y > 100):
+		do_gravity(delta)
 	
 		
 	if is_on_ceiling():
@@ -59,7 +61,7 @@ func jump():
 		
 
 func do_gravity(delta):
-	if not is_on_floor() and vel.y < 800 and not(is_on_wall() and vel.y > 100):
+	if not is_on_floor() and vel.y < 800:
 		vel.y += g*delta*g_multi*g_multi2
 	
 	if Input.is_action_pressed("ui_up"):
