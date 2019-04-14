@@ -1,5 +1,7 @@
 extends Node2D
 
+const MAX_DLEVEL = 4 # Maximum difficulty level
+
 func generate_level():
 	var level = [[0,0,0,0],
 				 [0,0,0,0],
@@ -38,7 +40,7 @@ func generate_level():
 			break
 		
 		level[gx][gy] = 2
-	
+		
 	print(level[0])
 	print(level[1])
 	print(level[2])
@@ -50,18 +52,32 @@ func instantiate_level(layout, level_number):
 	# know the difficulty of the level
 	
 	var segment_pool = []
-	var levels_per_dlevel = 5 # `dlevel` stands for "difficulty level"
-	var num_dlevels = 3
+	var dlevel = level_number / 5 # `dlevel` stands for "difficulty level"
+	dlevel = min(dlevel, MAX_DLEVEL)
 	
-	for dlevel in range(num_dlevels):
-		if level_number >= levels_per_dlevel * dlevel:
-			# This presumes that every diffculty level has the same number of
-			# segments. Ideally, we would look in the segment directory to
-			# find which segments exist, but for now this is good enough.
-			for i in range(8):
-				segment_pool.push_back("Seg-%02d-%02d.tscn" % [dlevel, i])
+	for d in range(dlevel + 1):
+		# This presumes that every diffculty level has the same number of
+		# segments. Ideally, we would look in the segment directory to find 
+		# which segments exist, but for now this is good enough.
+		for i in range(1):
+				segment_pool.push_back("Seg-%02d-%02d.tscn" % [d, i])
 	
-	print(segment_pool)
+	#print(segment_pool)
+	
+	for y in range(4):
+		for x in range(4):
+			match layout[y][x]:
+				1:
+					pass #TODO: instantiate entrance
+				2:
+					var seg = segment_pool[randi() % segment_pool.size()]
+					var instance = load("res://Scenes/LevelPiece/" + seg).instance()
+					get_tree().get_root().add_child(instance)
+					#TODO: change instance position
+				3:
+					pass #TODO: instantiate exit
+				_:
+					pass
 
 func _ready():
 	for i in range(0,10):
