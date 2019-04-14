@@ -16,8 +16,7 @@ func _process(delta):
 	
 	do_gravity(delta)
 	
-	if Input.is_action_just_pressed("ui_up"):
-		jump()
+	
 		
 	if is_on_ceiling():
 		vel.y = 1
@@ -42,22 +41,25 @@ func _process(delta):
 		vel.x = 1
 	elif is_on_wall():
 		vel.x = -1
+	if Input.is_action_just_pressed("ui_up"):
+		jump()
 	
 	vel.x = clamp(vel.x,-300,300)
-
 	move_and_slide_with_snap(vel,Vector2(0,1),Vector2(0,-1),snap,4,0.75,false)
 	snap = true
 		
 func jump():
 	if is_on_floor():
-		vel.y = -500
 		snap = false
+		vel.y = -500	
 	elif is_on_wall():
+		snap = false
 		vel.y = -500
-		vel.x = (-abs(vel.x)/(vel.x+0.001))*4000
+		vel.x = -(abs(vel.x)/(vel.x+0.001))*300
+		
 
 func do_gravity(delta):
-	if not is_on_floor() and vel.y < 800:
+	if not is_on_floor() and vel.y < 800 and not(is_on_wall() and vel.y > 100):
 		vel.y += g*delta*g_multi*g_multi2
 	
 	if Input.is_action_pressed("ui_up"):
