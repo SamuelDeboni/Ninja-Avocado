@@ -34,6 +34,7 @@ func generate_level():
 				gx -= 1
 		
 		if not can_d and cant_sides:
+			level[gx][gy] = 3
 			break
 		
 		level[gx][gy] = 2
