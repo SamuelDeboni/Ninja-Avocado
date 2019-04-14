@@ -15,8 +15,6 @@ func generate_level():
 	level[gx][gy] = 1
 	var dir = int(rand_range(0,2))
 	
-	
-	
 	for i in range(0,16):
 		
 		var can_d = gy+1 <= 3
@@ -47,7 +45,7 @@ func generate_level():
 
 
 func _ready():
-	#for i in range(0,10):
-		#generate_level()
-		#seed(randi())
+	for i in range(0,10):
+		generate_level()
+		seed(randi())
 	pass
