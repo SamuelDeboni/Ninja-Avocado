@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-var g = 1600.0
+var g = 1200.0
 var g_multi = 1
 var g_multi2 = 1
 var vel = Vector2()
@@ -45,21 +45,26 @@ func _process(delta):
 		vel.x = 5
 	elif is_on_wall():
 		vel.x = -5
+	
+	if not is_on_floor() and not is_on_wall():
+		$AnimatedSprite.animation = "Jump"
+	
+	
 	if Input.is_action_just_pressed("ui_up"):
 		jump()
 	
-	vel.x = clamp(vel.x,-300,300)
+	vel.x = clamp(vel.x,-200,200)
 	move_and_slide_with_snap(vel,Vector2(0,1),Vector2(0,-1),snap,4,0.75,false)
 	snap = true
 		
 func jump():
 	if is_on_floor():
 		snap = false
-		vel.y = -500	
+		vel.y = -400	
 	elif is_on_wall():
 		snap = false
-		vel.y = -500
-		vel.x = -(abs(vel.x)/(vel.x+0.001))*300
+		vel.y = -400
+		vel.x = -(abs(vel.x)/(vel.x+0.001))*200
 		
 
 func do_gravity(delta):

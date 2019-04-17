@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/NinjaAvocado.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atacking_1.png" type="Texture" id=2]
@@ -11,9 +11,12 @@
 [ext_resource path="res://Sprites/Avocado/Cyber Avocado_idle_NoNachos.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atacking.png" type="Texture" id=10]
 [ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atack.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atacking.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atack.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump.png" type="Texture" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9.33245, 16 )
+extents = Vector2( 9.33245, 14.7399 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -41,16 +44,27 @@ animations = [ {
 "loop": false,
 "name": "IdleAtack",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": false,
+"name": "JumpAtack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": false,
+"name": "Jump",
+"speed": 5.0
 } ]
 
 [node name="NinjaAvocado" type="KinematicBody2D"]
-position = Vector2( 16, 16 )
+position = Vector2( 16.184, 15.4479 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1.31 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -60,5 +74,5 @@ playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 2, 2 )
+zoom = Vector2( 0.5, 0.5 )
 
