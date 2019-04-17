@@ -9,11 +9,12 @@ func generate_level():
 				 [0,0,0,0],
 				 [0,0,0,0]]
 	
+	seed(OS.get_time().second + OS.get_time().minute + OS.get_time().hour + OS.get_ticks_msec())
 	seed(randi())
 	
 	var gx = 0
 	var gy = 0
-	gy = int(rand_range(0,4))
+	gx = int(rand_range(0,4))
 	level[gx][gy] = 1
 	var dir = int(rand_range(0,2))
 	
@@ -24,7 +25,7 @@ func generate_level():
 		var can_r = gx+1 <= 3
 		var cant_sides = (dir == 0 and not can_r) or (dir == 1 and not can_l)
 		
-		if can_d and (randf() > 0.75 or cant_sides):
+		if can_d and (randf() > 0.6 or cant_sides):
 			gy += 1	
 			var r = int(rand_range(0,2))
 			dir = r
@@ -40,6 +41,41 @@ func generate_level():
 			break
 		
 		level[gx][gy] = 2
+	
+	for y in range(0,4):
+		for x in range(0,4):
+			if level[x][y] == 2:
+				if x != 0 and level[x-1][y] != 0 and x != 3 and level[x+1][y] != 0:
+					level[x][y] = 4
+				if y != 0 and level[x][y-1] != 0 and y != 3 and level[x][y+1] != 0:
+					level[x][y] = 5
+	
+	#for y in range(0,4):
+	#	for x in range(0,4):
+	#		if level[x][y] == 4:
+	#			if y != 3 and level[x][y+1] == 5 or y != 0 and level[x][y-1] == 5:
+	#				level[x][y] = 2
+	#			#if y != 3 and level[x][y+1] == 4 or y != 0 and level[x][y-1] == 4:
+	#			#	level[x][y] = 2
+	#			#if y != 3 and level[x][y+1] == 6 or y != 0 and level[x][y-1] == 6:
+	#			#	level[x][y] = 2
+	#		
+	#		elif level[x][y] == 5:
+	#			if x != 3 and level[x+1][y] == 4 or x != 0 and level[x-1][y] == 4:
+	#				level[x][y] = 2
+	#			#if x != 3 and level[x+1][y] == 5 or x != 0 and level[x-1][y] == 5:
+	#				#level[x][y] = 2
+	#			#if x != 3 and level[x+1][y] == 6 or x != 0 and level[x-1][y] == 6:
+	#				#level[x][y] = 2
+
+			
+	# 1 Exit
+	# 2 Intercection
+	# 3 Entrace
+	# 4 Corridor
+	# 5 Vertical Corridor
+	# 6 Open area
+		
 	instantiate_level(level, 0)
 	print(level[0])
 	print(level[1])
@@ -60,7 +96,7 @@ func instantiate_level(layout, level_number):
 		# segments. Ideally, we would look in the segment directory to find 
 		# which segments exist, but for now this is good enough.
 		for i in range(2):
-				segment_pool.push_back("Seg-%02d-%02d.tscn" % [d, i])
+				segment_pool.push_back("-%02d-%02d.tscn" % [d, i])
 	
 	#print(segment_pool)
 	
@@ -68,10 +104,16 @@ func instantiate_level(layout, level_number):
 		for x in range(4):
 			var seg = ""
 			match layout[abs(x-3)][y]:
+				6:
+					seg = "Ope" + segment_pool[randi() % segment_pool.size()]
+				5:
+					seg = "Ver" + segment_pool[randi() % segment_pool.size()]
+				4:
+					seg = "Cor" + segment_pool[randi() % segment_pool.size()]
 				3:
 					seg = "Entrance.tscn"
 				2:
-					seg = segment_pool[randi() % segment_pool.size()]
+					seg = "Seg" + segment_pool[randi() % segment_pool.size()]
 				1:
 					seg = "Exit.tscn"
 				0:
@@ -92,3 +134,7 @@ func instantiate_level(layout, level_number):
 
 func _ready():
 	generate_level()
+	
+func _process(delta):
+	if Input.is_action_just_pressed("ui_page_up"):
+		get_tree().reload_current_scene()
