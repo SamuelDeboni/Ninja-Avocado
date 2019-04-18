@@ -11,12 +11,12 @@ var acel = 3000
 
 var lives = 4
 var health = 100
-var nachos = 10
+var nacho_count = 50
 
 var checkpoint_pos = Vector2()
 
 func _ready():
-	pass 
+	get_node("../Hud/HealthBar").value = health
 
 
 func _process(delta):
@@ -74,7 +74,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("jump"):
 		jump()
 	
-	if Input.is_action_just_pressed("trow"):
+	if Input.is_action_just_pressed("trow") and nacho_count > 0:
 		trow_nachos()
 	
 	if Input.is_action_pressed("Melle") and $MelleTimer.time_left == 0:
@@ -110,13 +110,14 @@ func trow_nachos():
 	var nachoi = nacho.instance()
 	get_node("..").add_child(nachoi)
 	
-	nachoi.position = position
+	nachoi.position = position - Vector2(0,8)
 	
 	if $AnimatedSprite.flip_h == true:
 		nachoi.vel = Vector2(10,0)
 	else:
 		nachoi.vel = Vector2(-10,0)
-	
+	nacho_count -= 1
+	get_node("../Hud/Nachos/Count").text = str(nacho_count)
 # jump function	
 func jump():
 	if is_on_floor(): # if is in the floor, normal jump
@@ -157,6 +158,7 @@ func die():
 	position = checkpoint_pos
 
 func damage(var damage: float):
+	
 	if $DamageTimer.time_left == 0:
 		health -= damage
 		$DamageTimer.wait_time = 0.25
@@ -164,4 +166,5 @@ func damage(var damage: float):
 	
 	if health <= 0:
 		die()
-		 
+	
+	get_node("../Hud/HealthBar").value = health
