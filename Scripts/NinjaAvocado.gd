@@ -13,6 +13,8 @@ var lives = 4
 var health = 100
 var nachos = 10
 
+var checkpoint_pos = Vector2()
+
 func _ready():
 	pass 
 
@@ -128,6 +130,7 @@ func jump():
 	
 # Gravity function
 func do_gravity(delta):
+	
 	if not is_on_floor() and vel.y < 800:
 		vel.y += g*delta*g_multi*g_multi2
 	
@@ -147,3 +150,18 @@ func do_gravity(delta):
 		g_multi = 2
 	else:
 		g_multi = 1
+
+func die():
+	health = 100
+	$DamageTimer.wait_time = 1
+	position = checkpoint_pos
+
+func damage(var damage: float):
+	if $DamageTimer.time_left == 0:
+		health -= damage
+		$DamageTimer.wait_time = 0.25
+		$DamageTimer.start()
+	
+	if health <= 0:
+		die()
+		 
