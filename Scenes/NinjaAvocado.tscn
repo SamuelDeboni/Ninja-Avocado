@@ -1,59 +1,73 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/NinjaAvocado.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atacking_1.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atack_2.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atack_3.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_1.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_2.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_3.png" type="Texture" id=7]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado_idle_1.png" type="Texture" id=8]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado_idle_NoNachos.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atacking.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atack.png" type="Texture" id=11]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atacking.png" type="Texture" id=12]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atack.png" type="Texture" id=13]
-[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado WallJumping.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_1.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_3.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado_idle_1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado_idle_NoNachos.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atacking.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado_Idle_Atack.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atacking_1.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atack_2.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Walking_Atack_3.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atacking.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump_Atack.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Jump.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Melle_1.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Melle_2.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/Avocado/Cyber Avocado Melle_3.png" type="Texture" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9.33245, 14.7399 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "WlakingAtack",
-"speed": 15.0
+"name": "Wall",
+"speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "Walking",
-"speed": 15.0
+"speed": 20.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "IdleNoNachos",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
 "loop": false,
 "name": "IdleAtack",
-"speed": 5.0
+"speed": 60.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
+"loop": false,
+"name": "WalkingAtack",
+"speed": 60.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ) ],
 "loop": false,
 "name": "JumpAtack",
-"speed": 5.0
+"speed": 30.0
 }, {
-"frames": [ ExtResource( 14 ) ],
+"frames": [ ExtResource( 15 ) ],
 "loop": false,
 "name": "Jump",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": false,
+"name": "Melle",
+"speed": 15.0
 } ]
 
 [node name="NinjaAvocado" type="KinematicBody2D"]
@@ -68,11 +82,26 @@ position = Vector2( 0, 1.31 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 0.999999 )
 frames = SubResource( 2 )
 animation = "Idle"
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 2, 2 )
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+autostart = true
+
+[node name="MelleTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( -40, 0 )
 
