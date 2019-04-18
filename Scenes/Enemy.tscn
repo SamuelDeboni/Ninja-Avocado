@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Enemies/Guarana Laser_Walking_1.png" type="Texture" id=2]
@@ -6,7 +6,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 210.69, 35.7431, 0, 0, 0, 0, 25.0813, 35.7431 )
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 186.587, 36.043, 0, 0, 0, 0, 83.1572, 36.6736, 0, 0, 0, 0, 25.0813, 35.7431 )
 }
 
 [sub_resource type="SpriteFrames" id=2]
@@ -17,16 +17,20 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Path2D" type="Path2D"]
+[sub_resource type="CircleShape2D" id=3]
+radius = 16.6643
+
+[node name="Enemie" type="Path2D"]
 curve = SubResource( 1 )
 
 [node name="Enemy" type="PathFollow2D" parent="."]
 position = Vector2( 25.68, 35.7431 )
+rotation = 0.00186443
 script = ExtResource( 1 )
+damage_color = Color( 0, 0.180392, 1, 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Enemy"]
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="Enemy"]
@@ -34,3 +38,11 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
+[node name="Area2D" type="Area2D" parent="Enemy"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Area2D"]
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="Enemy/Area2D" to="Enemy" method="_on_Area2D_body_entered"]

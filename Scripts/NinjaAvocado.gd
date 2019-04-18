@@ -80,9 +80,11 @@ func _process(delta):
 	if Input.is_action_pressed("Melle") and $MelleTimer.time_left == 0:
 		melle_atack()
 		if $AnimatedSprite.flip_h == true:
-			$RayCast2D.cast_to = Vector2(40,0)
+			$RayCast2D.cast_to = Vector2(100,0)
+			$RayCast2D.position = Vector2(-50,0)
 		else:
-			$RayCast2D.cast_to = Vector2(-40,0)
+			$RayCast2D.position = Vector2(50,0)
+			$RayCast2D.cast_to = Vector2(-100,0)
 	
 	# Clamps the x velocity
 	vel.x = clamp(vel.x,-200,200)
@@ -93,6 +95,10 @@ func _process(delta):
 func melle_atack():
 	$MelleTimer.start()
 	$AnimatedSprite.animation = "Melle"
+		
+	if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_parent().name == "Enemy":
+		$RayCast2D.get_collider().get_parent().damage(10)
+		print($RayCast2D.get_collider().get_parent().name)
 	
 
 # Trow function
