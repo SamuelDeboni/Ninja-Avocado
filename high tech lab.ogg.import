@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/high tech lab.ogg-4a90bbf96a6243912a9fd0abee9f2450.oggstr"
+
+[deps]
+
+source_file="res://high tech lab.ogg"
+dest_files=[ "res://.import/high tech lab.ogg-4a90bbf96a6243912a9fd0abee9f2450.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

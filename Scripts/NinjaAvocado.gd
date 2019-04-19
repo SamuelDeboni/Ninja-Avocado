@@ -2,6 +2,11 @@ extends KinematicBody2D
 
 onready var nacho = preload("res://Scenes/Nacho.tscn")
 
+
+onready var tile_map = get_node("../TileMap")
+
+var avocados_rescued = 0
+
 var g = 600.0
 var g_multi = 1
 var g_multi2 = 1
@@ -13,14 +18,37 @@ var lives = 4
 var health = 100
 var nacho_count = 50
 
-var checkpoint_pos = Vector2()
+var checkpoint_pos = Vector2(100,2000)
 
 func _ready():
 	get_node("../Hud/HealthBar").value = health
 
 
+func is_on_spike():
+	var tile_pos = tile_map.world_to_map(position)
+	var td = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y + 1)) 
+	var tr = tile_map.get_cellv(Vector2(tile_pos.x+1, tile_pos.y))
+	var tl = tile_map.get_cellv(Vector2(tile_pos.x-1, tile_pos.y))
+	var tu = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y - 1))
+	
+	var on_spike = (td == 4 and is_on_floor()
+					or is_on_wall() and(tr == 4 or tl == 4)
+					or is_on_ceiling() and tu == 4)
+	
+	return on_spike
+
 func _process(delta):
 
+
+	get_node("../Hud/Nachos/Count").text = str(nacho_count)
+	
+	get_node("../Hud/ac").text = "Avocados Left = " + str(7-avocados_rescued)
+	if avocados_rescued == 7:
+		get_node("../Hud/ac").text == "Go to the final battle"
+		
+	if is_on_spike():
+		die()
+	
 	do_gravity(delta) # calls the gravit function
 	
 	# If the player is trying to go against a wall
@@ -138,7 +166,7 @@ func jump():
 # Gravity function
 func do_gravity(delta):
 	
-	if not is_on_floor() and vel.y < 800:
+	if not is_on_floor() and vel.y < 500:
 		vel.y += g*delta*g_multi*g_multi2
 	
 	if Input.is_action_pressed("jump"):
