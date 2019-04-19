@@ -32,3 +32,8 @@ texture = ExtResource( 4 )
 position = Vector2( 37, 18 )
 texture = ExtResource( 5 )
 
+[node name="FireTimer" type="Timer" parent="Tail"]
+
+[node name="NinjaAvocado" type="Node2D" parent="."]
+position = Vector2( -226.408, 25.7283 )
+

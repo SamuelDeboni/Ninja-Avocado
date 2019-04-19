@@ -28,7 +28,7 @@ func attack():
 	var laseri = laser.instance()
 	get_node("..").add_child(laseri)
 	laseri.position = position + Vector2(0, -7)
-	laseri.vel = Vector2(500, 0) if $Sprite.flip_h else Vector2(-500, 0)
+	laseri.vel = 500 if $Sprite.flip_h else -500
 	
 func damage(var damage: float):
 	health -= damage

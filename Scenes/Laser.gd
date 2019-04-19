@@ -1,6 +1,6 @@
 extends Area2D
 
-var vel = Vector2()
+var vel = 0
 var t = 0.0
 
 func _process(delta):
@@ -9,7 +9,7 @@ func _process(delta):
 	if t > 5:
 		queue_free()
 		
-	position += vel*delta
+	move_local_x(vel*delta)
 
 
 
