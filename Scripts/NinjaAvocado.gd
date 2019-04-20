@@ -124,9 +124,14 @@ func melle_atack():
 	$MelleTimer.start()
 	$AnimatedSprite.animation = "Melle"
 		
-	if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_parent().name == "Enemy":
-		$RayCast2D.get_collider().get_parent().damage(10)
-		print($RayCast2D.get_collider().get_parent().name)
+	if $RayCast2D.is_colliding():
+		var par = $RayCast2D.get_collider().get_parent()
+		if par.name == "Enemy":
+			par.damage(10)
+			#print(par.name)
+			
+		if par.get_parent().name == "Boss":
+			par.get_parent().damage(par.name(), 10)
 	
 
 # Trow function

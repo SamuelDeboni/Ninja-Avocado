@@ -31,7 +31,6 @@ damage_color = Color( 0, 0.180392, 1, 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Enemy"]
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="Enemy"]
