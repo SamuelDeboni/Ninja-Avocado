@@ -21,12 +21,15 @@ func _ready():
 	minigun_start_firing()
 
 func _process(delta):
-	aim_tail(get_tree().get_root().find_node("NinjaAvocado", true, false).get_global_position())
+	var player = get_tree().get_root().find_node("NinjaAvocado", true, false)
+	if player != null:
+		aim_tail(player.get_global_position())
+		
 	if $Minigun.rotation_degrees >= 60:
 		minigun_rotating_dir = false
 	if $Minigun.rotation_degrees < 0:
 		minigun_rotating_dir = true
-		
+	
 	if minigun_pattern == 0 && $Minigun.rotation > 0:
 		$Minigun.rotate(-delta)
 		$Minigun.rotation = max($Minigun.rotation, 0)
@@ -34,8 +37,6 @@ func _process(delta):
 		$Minigun.rotate(delta if minigun_rotating_dir else -delta)
 	if minigun_pattern == 2:
 		$Minigun.rotate(2 * delta if minigun_rotating_dir else -2 * delta)
-	
-	
 
 func aim_tail(player_pos):
 	var tip_pos = Vector2(-55, -48)
@@ -69,3 +70,17 @@ func minigun_fire():
 	
 	curr_minigun_tex = (curr_minigun_tex + 1) % 2
 	$Minigun.texture = minigun_textures[curr_minigun_tex]
+	
+func tail_fire():
+	var laseri = laser.instance()
+	$Tail.add_child(laseri)
+	laseri.position += Vector2(-55, -48)
+	
+	var laser_pos = laseri.get_global_position()
+	var laser_rot = laseri.get_global_rotation()
+	$Tail.remove_child(laseri)
+	get_tree().get_root().add_child(laseri)
+	laseri.set_global_position(laser_pos)
+	laseri.set_global_rotation(laser_rot)
+	
+	laseri.vel = -500

@@ -11,3 +11,4 @@ func _on_Avocado_body_entered(body):
 			body.avocados_rescued += 1
 		is_rescued = true
 		
+		$Sprite.visible = false
