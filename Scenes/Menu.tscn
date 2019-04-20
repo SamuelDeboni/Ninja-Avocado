@@ -31,7 +31,7 @@ Samuel Deboni - Programmer
 Bruno Andreotti - Programmer
 Gleiston Assis - Pixel Art
 
-Music used:https://opengameart.org/content/battle-midi
+Music used: https://opengameart.org/content/battle-midi
 https://opengameart.org/content/high-tech-lab"
 
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]

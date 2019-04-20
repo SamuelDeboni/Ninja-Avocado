@@ -25,17 +25,21 @@ func _ready():
 
 
 func is_on_spike():
-	var tile_pos = tile_map.world_to_map(position)
-	var td = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y + 1)) 
-	var tr = tile_map.get_cellv(Vector2(tile_pos.x+1, tile_pos.y))
-	var tl = tile_map.get_cellv(Vector2(tile_pos.x-1, tile_pos.y))
-	var tu = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y - 1))
+	var tile_map = get_node("../TileMap")
 	
-	var on_spike = (td == 4 and is_on_floor()
-					or is_on_wall() and(tr == 4 or tl == 4)
-					or is_on_ceiling() and tu == 4)
-	
-	return on_spike
+	if tile_map != null:
+		var tile_pos = tile_map.world_to_map(position)
+		var td = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y + 1)) 
+		var tr = tile_map.get_cellv(Vector2(tile_pos.x+1, tile_pos.y))
+		var tl = tile_map.get_cellv(Vector2(tile_pos.x-1, tile_pos.y))
+		var tu = tile_map.get_cellv(Vector2(tile_pos.x, tile_pos.y - 1))
+		
+		var on_spike = (td == 4 and is_on_floor()
+						or is_on_wall() and(tr == 4 or tl == 4)
+						or is_on_ceiling() and tu == 4)
+		
+		return on_spike
+	return false
 
 func _process(delta):
 
@@ -131,7 +135,7 @@ func melle_atack():
 			#print(par.name)
 			
 		if par.get_parent().name == "Boss":
-			par.get_parent().damage(par.name(), 10)
+			par.get_parent().damage(par.name, 10)
 	
 
 # Trow function

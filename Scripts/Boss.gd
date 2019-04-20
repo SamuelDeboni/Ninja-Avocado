@@ -53,7 +53,6 @@ func _process(delta):
 
 func activate():
 	paused = false
-	$Minigun/FireTimer.paused = false
 	$Minigun/PatternTimer.paused = false
 	$Minigun/SpinUpTimer.paused = false
 	$Tail/FireTimer.paused = false
@@ -62,6 +61,7 @@ func aim_tail(player_pos):
 	var tip_pos = Vector2(-55, -48)
 	$Tail.look_at(player_pos - tip_pos)
 	$Tail.rotation_degrees -= 150
+	$Tail.rotation_degrees = clamp($Tail.rotation_degrees, -45, 85)
 	
 func minigun_change_pattern():
 	minigun_pattern += 1
@@ -107,7 +107,7 @@ func tail_fire():
 	laseri.vel = -500
 
 func damage(part, dmg):
-	print(part)
+
 	match part:
 		"Body":
 			body_health -= dmg
@@ -130,15 +130,15 @@ func damage(part, dmg):
 	
 func _on_Body_entered(body):
 	if body.name != "NinjaAvocado":
-		damage(0, 5)
+		damage("Body", 5)
 		body.queue_free()
 
 func _on_Tail_entered(body):
 	if body.name != "NinjaAvocado":
-		damage(1, 5)
+		damage("Tail", 5)
 		body.queue_free()
 	
 func _on_Minigun_entered(body):
 	if body.name != "NinjaAvocado":
-		damage(2, 5)
+		damage("Minigun", 5)
 		body.queue_free()

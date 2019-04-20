@@ -7,7 +7,7 @@
 [ext_resource path="res://Sprites/Boss/Pinnaple Mastermind Tail.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 19.6195, 7.28472 )
+extents = Vector2( 19.6195, 11.802 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 15.8873
@@ -41,15 +41,19 @@ wait_time = 5.0
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="Minigun"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Minigun/Area2D"]
-position = Vector2( -12.0375, -0.209351 )
+position = Vector2( -11.0862, -5.20374 )
 shape = SubResource( 1 )
 
 [node name="Body" type="Sprite" parent="."]
 texture = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="Body"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Area2D"]
 position = Vector2( -1.50208, -3.20686 )
@@ -63,6 +67,8 @@ texture = ExtResource( 5 )
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="Tail"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tail/Area2D"]
 position = Vector2( -33.7715, -53.2733 )
