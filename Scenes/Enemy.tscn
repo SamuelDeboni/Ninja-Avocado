@@ -5,8 +5,9 @@
 [ext_resource path="res://Sprites/Enemies/Guarana Laser_Walking_2.png" type="Texture" id=3]
 
 [sub_resource type="Curve2D" id=1]
+resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 186.587, 36.043, 0, 0, 0, 0, 83.1572, 36.6736, 0, 0, 0, 0, 25.0813, 35.7431 )
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 320.26, 36.2952, 0, 0, 0, 0, 25.0813, 35.7431 )
 }
 
 [sub_resource type="SpriteFrames" id=2]
@@ -31,6 +32,7 @@ damage_color = Color( 0, 0.180392, 1, 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Enemy"]
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="Enemy"]

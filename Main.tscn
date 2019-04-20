@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Sprites/Nachuriken.png" type="Texture" id=1]
 [ext_resource path="res://new_tileset.tres" type="TileSet" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scripts/Door.gd" type="Script" id=7]
 [ext_resource path="res://Sprites/Door.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Boss.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0, 0, 1 )
@@ -34,6 +35,36 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="Curve2D" id=7]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 320.26, 36.2952, 0, 0, 0, 0, 25.0813, 35.7431 )
+}
+
+[sub_resource type="Curve2D" id=3]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 482.71, 36.295, 0, 0, 0, 0, 25.0813, 35.7431 )
+}
+
+[sub_resource type="Curve2D" id=4]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 93.4126, 35.8595, 0, 0, 0, 0, 25.0813, 35.7431 )
+}
+
+[sub_resource type="Curve2D" id=5]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 158.627, 36.4136, 0, 0, 0, 0, 25.0813, 35.7431 )
+}
+
+[sub_resource type="Curve2D" id=6]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.68, 35.7431, 0, 0, 0, 0, 25.6823, 35.1339, 0, 0, 0, 0, 119.819, 35.0682, 0, 0, 0, 0, 25.0813, 35.7431 )
+}
 
 [node name="Main" type="Node2D"]
 
@@ -134,5 +165,25 @@ texture = ExtResource( 8 )
 
 [node name="Boss" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1945, 304 )
+
+[node name="Enemie" parent="." instance=ExtResource( 10 )]
+position = Vector2( 325.841, 1706.36 )
+curve = SubResource( 7 )
+
+[node name="Enemie2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 193.791, 1575.26 )
+curve = SubResource( 3 )
+
+[node name="Enemie3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1186.34, 1896.72 )
+curve = SubResource( 4 )
+
+[node name="Enemie4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1710.38, 1961.38 )
+curve = SubResource( 5 )
+
+[node name="Enemie5" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1323.49, 299.251 )
+curve = SubResource( 6 )
 
 [connection signal="body_entered" from="TriggerBoss" to="TriggerBoss" method="_on_TriggerBoss_body_entered"]

@@ -50,12 +50,23 @@ func _process(delta):
 				$Minigun.rotate(delta if minigun_rotating_dir else -delta)
 			if minigun_pattern == 2:
 				$Minigun.rotate(2 * delta if minigun_rotating_dir else -2 * delta)
+		
+		if player != null:
+			if player.position.distance_to(position) > 1000:
+				deactivate()
 
 func activate():
 	paused = false
 	$Minigun/PatternTimer.paused = false
 	$Minigun/SpinUpTimer.paused = false
 	$Tail/FireTimer.paused = false
+
+func deactivate():
+	paused = true
+	$Minigun/FireTimer.paused = true
+	$Minigun/PatternTimer.paused = true
+	$Minigun/SpinUpTimer.paused = true
+	$Tail/FireTimer.paused = true
 
 func aim_tail(player_pos):
 	var tip_pos = Vector2(-55, -48)
@@ -112,7 +123,7 @@ func damage(part, dmg):
 		"Body":
 			body_health -= dmg
 			if body_health <= 0:
-				print("yay, you won, congratulations or something")
+				get_tree().change_scene("res://Menu.tscn")
 		"Tail":
 			tail_health -= dmg
 			if tail_health <= 0:
